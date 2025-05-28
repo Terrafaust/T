@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portail GitHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #333;
+            line-height: 1.6;
+        }
+        .category-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #2c3e50; /* Dark blue-gray */
+            margin-bottom: 1.5rem; /* mb-6 */
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .category-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #3498db; /* Blue accent */
+            border-radius: 2px;
+        }
+        .project-card {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        }
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02); /* Slight lift and scale */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* stronger shadow */
+        }
+        /* Custom modal animation */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .modal-visible .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-visible .modal-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <main class="flex-grow container mx-auto px-4 py-12">
+        <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12 tracking-tight">Projets Actuels</h1>
+
+        <section class="mb-16">
+            <h2 class="category-title">Jeu</h2>
+            <div class="border-4 border-blue-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="project-card bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game1">
+                        <h3 class="text-3xl font-bold mb-3">Game</h3>
+                        <p class="text-lg opacity-90">Un jeu incrémental passionnant</p>
+                    </div>
+                    <div class="project-card bg-gradient-to-br from-green-500 to-blue-600 text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game2">
+                        <h3 class="text-3xl font-bold mb-3">Game 2</h3>
+                        <p class="text-lg opacity-90">La suite de l'aventure incrémentale</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="category-title">Apprentissage</h2>
+            <div class="border-4 border-yellow-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+                    <div class="project-card bg-gradient-to-br from-yellow-500 to-orange-600 text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="learnruss">
+                        <h3 class="text-3xl font-bold mb-3">LearnRussian</h3>
+                        <p class="text-lg opacity-90">Apprenez le russe de manière interactive</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-6 px-4 text-right text-gray-600 text-sm">
+        <p>Fait par Terra&IA</p>
+    </footer>
+
+    <div id="projectModal" class="modal-overlay fixed inset-0 hidden items-center justify-center z-50 opacity-0">
+        <div class="modal-content bg-white p-8 rounded-xl shadow-2xl relative max-w-lg w-11/12 mx-auto transform -translate-y-full opacity-0">
+            <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            <h3 id="modalTitle" class="text-4xl font-extrabold text-gray-800 mb-6 text-center"></h3>
+            <div id="modalDescription" class="text-gray-700 text-lg leading-relaxed space-y-4">
+                </div>
+            <a id="modalLink" href="#" target="_blank" class="block mt-8 text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">Visiter le site</a>
+        </div>
+    </div>
+
+    <script>
+        // Descriptions des projets
+        const projectDescriptions = {
+            game1: {
+                title: "Game",
+                url: "https://terrafaust.github.io/Game/Index.html",
+                description: `
+                    <p>Ce jeu est un incrémental, avec une production principalement passive de ressources sur le thème des études. Voici les différentes fonctionnalités implémentées pour l'instant :</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li>Production de ressource</li>
+                        <li>Constructions diverses</li>
+                        <li>Modèle de reset avec Ascension / Prestige</li>
+                        <li>Arbre de compétence pour chaque grande étape du jeu</li>
+                        <li>Achievements/succès</li>
+                        <li>Quêtes</li>
+                        <li>Paramètres avec options utiles et ergonomiques</li>
+                    </ul>
+                `
+            },
+            game2: {
+                title: "Game 2",
+                url: "https://terrafaust.github.io/Game2/Index.html",
+                description: `
+                    <p>Ce jeu est également un incrémental, reprenant et améliorant les concepts du premier, avec une production principalement passive de ressources sur le thème des études. Il inclut les fonctionnalités suivantes :</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li>Production de ressource</li>
+                        <li>Constructions diverses</li>
+                        <li>Modèle de reset avec Ascension / Prestige</li>
+                        <li>Arbre de compétence pour chaque grande étape du jeu</li>
+                        <li>Achievements/succès</li>
+                        <li>Quêtes</li>
+                        <li>Paramètres avec options utiles et ergonomiques</li>
+                    </ul>
+                `
+            },
+            learnruss: {
+                title: "LearnRussian",
+                url: "https://terrafaust.github.io/LearnRuss/",
+                description: `
+                    <p>Ce site est composé de plusieurs parties pour apprendre le russe :</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><strong>Partie Vocabulaire :</strong> Avec des fonctionnalités pour enlever les traductions, mettre des mots en favoris, catégoriser le vocabulaire en différents thèmes.</li>
+                        <li><strong>Partie Cours en 21 jours :</strong> Permet d'apprendre les bases de russe en 21 Jours. Cette partie comprend des focus sur l'histoire, la culture, la phonétique, l’étymologie et d'autres apports culturels. Jour après jour, le visiteur peut apprendre du vocabulaire, la conjugaison, l'alphabet, les bases pour les discussions du quotidien à travers des exercices.</li>
+                        <li><strong>Partie Alphabet :</strong> Spécialisée dans l'apprentissage des lettres avec un alphabet visuel et pratique.</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Get DOM elements
+        const projectCards = document.querySelectorAll('.project-card');
+        const projectModal = document.getElementById('projectModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalLink = document.getElementById('modalLink');
+        const modalContent = projectModal.querySelector('.modal-content');
+
+        // Function to show the modal
+        function showModal(projectId) {
+            const project = projectDescriptions[projectId];
+            if (project) {
+                modalTitle.textContent = project.title;
+                modalDescription.innerHTML = project.description;
+                modalLink.href = project.url;
+                projectModal.classList.remove('hidden');
+                // Trigger reflow to enable transition
+                void projectModal.offsetWidth;
+                projectModal.classList.add('modal-visible');
+            }
+        }
+
+        // Function to hide the modal
+        function hideModal() {
+            projectModal.classList.remove('modal-visible');
+            projectModal.classList.add('hidden');
+        }
+
+        // Add event listeners to project cards
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.getAttribute('data-project');
+                showModal(projectId);
+            });
+        });
+
+        // Add event listener to close button
+        closeModalButton.addEventListener('click', hideModal);
+
+        // Add event listener to hide modal when clicking outside content
+        projectModal.addEventListener('click', (event) => {
+            if (!modalContent.contains(event.target) && event.target !== closeModalButton) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>
