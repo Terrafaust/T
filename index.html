@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Portail GitHub</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.5/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Custom CSS for body and typography */
@@ -41,7 +40,16 @@
             cursor: pointer;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
             border-radius: 0.75rem; /* rounded-xl */
+            /* Added basic background colors to mimic Tailwind gradients for functionality */
+            background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899); /* Default for game1 */
         }
+        .project-card[data-project="game2"] {
+            background-image: linear-gradient(to bottom right, #22c55e, #3b82f6); /* For game2 */
+        }
+        .project-card[data-project="learnruss"] {
+            background-image: linear-gradient(to bottom right, #f59e0b, #ea580c); /* For learnruss */
+        }
+
         .project-card:hover {
             transform: translateY(-5px) scale(1.02); /* Slight lift and scale */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* stronger shadow */
@@ -64,6 +72,16 @@
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
             max-height: 80vh; /* Limit height for scrollability */
             overflow-y: auto; /* Enable vertical scrolling */
+            /* Basic styling for modal content */
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            position: relative;
+            max-width: 32rem; /* max-w-lg */
+            width: 91.666667%; /* w-11/12 */
+            margin-left: auto;
+            margin-right: auto;
         }
         .modal-overlay.is-visible .modal-content {
             transform: translateY(0);
@@ -71,13 +89,109 @@
         }
         /* Custom button gradient for modal link */
         .modal-link-button {
-            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+            /* Default gradient, will be overridden by JS */
+            background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899);
             transition: all 0.3s ease-in-out;
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
         }
         .modal-link-button:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+
+        /* Basic mimicked Tailwind classes for core layout and typography */
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .container {
+                max-width: 640px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .container {
+                max-width: 768px;
+            }
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .md\:p-8 {
+                padding: 2rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .container {
+                max-width: 1024px;
+            }
+            .lg\:p-10 {
+                padding: 2.5rem;
+            }
+        }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-grow { flex-grow: 1; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .text-5xl { font-size: 3rem; line-height: 1; }
+        .font-extrabold { font-weight: 800; }
+        .text-gray-800 { color: #1f2937; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .text-white { color: #fff; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .opacity-90 { opacity: 0.9; }
+        .text-gray-600 { color: #4b5563; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .fixed { position: fixed; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-50 { z-index: 50; }
+        .pointer-events-none { pointer-events: none; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .top-4 { top: 1rem; }
+        .right-4 { right: 1rem; }
+        .text-gray-500 { color: #6b7280; }
+        .hover\:text-gray-800:hover { color: #1f2937; }
+        .font-bold { font-weight: 700; }
+        .leading-relaxed { line-height: 1.625; }
+        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+        .block { display: block; }
+        .list-disc { list-style-type: disc; }
+        .list-inside { list-style-position: inside; }
+        .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }
+        .text-blue-600 { color: #2563eb; }
+        .text-green-600 { color: #16a34a; }
+        .text-orange-600 { color: #f97316; }
+        .border-4 { border-width: 4px; }
+        .border-blue-400 { border-color: #60a5fa; }
+        .border-yellow-400 { border-color: #fbbf24; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -89,11 +203,11 @@
             <h2 class="category-title">Jeu</h2>
             <div class="border-4 border-blue-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="project-card bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game1">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game1">
                         <h3 class="text-3xl font-bold mb-3">Game</h3>
                         <p class="text-lg opacity-90">Un jeu incrémental passionnant</p>
                     </div>
-                    <div class="project-card bg-gradient-to-br from-green-500 to-blue-600 text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game2">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game2">
                         <h3 class="text-3xl font-bold mb-3">Game 2</h3>
                         <p class="text-lg opacity-90">La suite de l'aventure incrémentale</p>
                     </div>
@@ -105,7 +219,7 @@
             <h2 class="category-title">Apprentissage</h2>
             <div class="border-4 border-yellow-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-                    <div class="project-card bg-gradient-to-br from-yellow-500 to-orange-600 text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="learnruss">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="learnruss">
                         <h3 class="text-3xl font-bold mb-3">LearnRussian</h3>
                         <p class="text-lg opacity-90">Apprenez le russe de manière interactive</p>
                     </div>
@@ -119,12 +233,12 @@
     </footer>
 
     <div id="projectModal" class="modal-overlay fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-        <div class="modal-content bg-white p-8 rounded-xl shadow-2xl relative max-w-lg w-11/12 mx-auto">
+        <div class="modal-content">
             <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
             <h3 id="modalTitle" class="text-4xl font-extrabold text-gray-800 mb-6 text-center"></h3>
             <div id="modalDescription" class="text-gray-700 text-lg leading-relaxed space-y-4">
             </div>
-            <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="modal-link-button block mt-8 text-center text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">Visiter le site</a>
+            <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="modal-link-button">Visiter le site</a>
         </div>
     </div>
 
@@ -193,19 +307,17 @@
         function setModalLinkGradient(projectId) {
             let fromColor, toColor;
             if (projectId === 'game1') {
-                fromColor = 'from-purple-500';
-                toColor = 'to-pink-600';
+                fromColor = '#8b5cf6'; /* purple-500 */
+                toColor = '#ec4899'; /* pink-600 */
             } else if (projectId === 'game2') {
-                fromColor = 'from-green-500';
-                toColor = 'to-blue-600';
+                fromColor = '#22c55e'; /* green-500 */
+                toColor = '#3b82f6'; /* blue-600 */
             } else if (projectId === 'learnruss') {
-                fromColor = 'from-yellow-500';
-                toColor = 'to-orange-600';
+                fromColor = '#f59e0b'; /* yellow-500 */
+                toColor = '#ea580c'; /* orange-600 */
             }
-            // Clear previous gradient classes to ensure only the correct one is applied
-            modalLink.classList.remove('from-purple-500', 'to-pink-600', 'from-green-500', 'to-blue-600', 'from-yellow-500', 'to-orange-600');
-            // Add new gradient classes
-            modalLink.classList.add(fromColor, toColor);
+            // Apply gradient directly via style property
+            modalLink.style.backgroundImage = `linear-gradient(to bottom right, ${fromColor}, ${toColor})`;
         }
 
         /**
