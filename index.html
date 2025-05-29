@@ -7,12 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Custom CSS for body and typography */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8; /* Light blue-gray background */
             color: #333;
             line-height: 1.6;
         }
+        /* Styling for category titles with an underline effect */
         .category-title {
             font-size: 2.25rem; /* text-4xl */
             font-weight: 700; /* font-bold */
@@ -33,6 +35,7 @@
             background-color: #3498db; /* Blue accent */
             border-radius: 2px;
         }
+        /* Project card hover effects */
         .project-card {
             transition: all 0.3s ease-in-out;
             cursor: pointer;
@@ -120,12 +123,12 @@
             <h3 id="modalTitle" class="text-4xl font-extrabold text-gray-800 mb-6 text-center"></h3>
             <div id="modalDescription" class="text-gray-700 text-lg leading-relaxed space-y-4">
                 </div>
-            <a id="modalLink" href="#" target="_blank" class="modal-link-button block mt-8 text-center text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">Visiter le site</a>
+            <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="modal-link-button block mt-8 text-center text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">Visiter le site</a>
         </div>
     </div>
 
     <script>
-        // Descriptions des projets
+        // Descriptions des projets, contenant le titre, l'URL et la description détaillée.
         const projectDescriptions = {
             game1: {
                 title: "Game",
@@ -173,7 +176,7 @@
             }
         };
 
-        // Get DOM elements
+        // Get DOM elements for interaction
         const projectCards = document.querySelectorAll('.project-card');
         const projectModal = document.getElementById('projectModal');
         const closeModalButton = document.getElementById('closeModal');
@@ -182,7 +185,10 @@
         const modalLink = document.getElementById('modalLink');
         const modalContent = projectModal.querySelector('.modal-content');
 
-        // Add gradient classes dynamically to the modal link button based on the project type
+        /**
+         * Sets the gradient classes dynamically to the modal link button based on the project type.
+         * @param {string} projectId - The ID of the project ('game1', 'game2', 'learnruss').
+         */
         function setModalLinkGradient(projectId) {
             let fromColor, toColor;
             if (projectId === 'game1') {
@@ -195,13 +201,16 @@
                 fromColor = 'from-yellow-500';
                 toColor = 'to-orange-600';
             }
-            // Clear previous gradient classes
+            // Clear previous gradient classes to ensure only the correct one is applied
             modalLink.classList.remove('from-purple-500', 'to-pink-600', 'from-green-500', 'to-blue-600', 'from-yellow-500', 'to-orange-600');
             // Add new gradient classes
             modalLink.classList.add(fromColor, toColor);
         }
 
-        // Function to show the modal
+        /**
+         * Displays the project modal with content specific to the given project ID.
+         * @param {string} projectId - The ID of the project to display.
+         */
         function showModal(projectId) {
             console.log(`Attempting to show modal for project: ${projectId}`); // Log for debugging
             const project = projectDescriptions[projectId];
@@ -211,23 +220,29 @@
                 modalLink.href = project.url;
                 setModalLinkGradient(projectId); // Set the gradient for the button
 
-                projectModal.classList.add('is-visible'); // Use custom class for visibility
-                projectModal.classList.remove('pointer-events-none'); // Enable pointer events
+                // Add 'is-visible' class to trigger CSS transitions for visibility and opacity
+                projectModal.classList.add('is-visible');
+                // Remove 'pointer-events-none' to allow interaction with the modal
+                projectModal.classList.remove('pointer-events-none');
                 console.log('Modal should now be visible.'); // Log for debugging
             } else {
-                console.error(`Project description not found for ID: ${projectId}`); // Error log
+                console.error(`Project description not found for ID: ${projectId}`); // Error log if project ID is invalid
             }
         }
 
-        // Function to hide the modal
+        /**
+         * Hides the project modal.
+         */
         function hideModal() {
             console.log('Attempting to hide modal.'); // Log for debugging
-            projectModal.classList.remove('is-visible'); // Use custom class for visibility
-            projectModal.classList.add('pointer-events-none'); // Disable pointer events
+            // Remove 'is-visible' class to trigger CSS transitions for hiding
+            projectModal.classList.remove('is-visible');
+            // Add 'pointer-events-none' to prevent interaction with the hidden modal
+            projectModal.classList.add('pointer-events-none');
             console.log('Modal should now be hidden.'); // Log for debugging
         }
 
-        // Add event listeners to project cards
+        // Add event listeners to each project card to show the modal on click
         projectCards.forEach(card => {
             card.addEventListener('click', () => {
                 console.log('Project card clicked!'); // Log for debugging
@@ -236,13 +251,13 @@
             });
         });
 
-        // Add event listener to close button
+        // Add event listener to the close button inside the modal
         closeModalButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent click from bubbling to overlay
+            event.stopPropagation(); // Prevent click from bubbling up to the modal overlay
             hideModal();
         });
 
-        // Add event listener to hide modal when clicking outside content
+        // Add event listener to hide the modal when clicking outside the modal content (on the overlay)
         projectModal.addEventListener('click', (event) => {
             // Check if the click occurred directly on the modal overlay, not its content
             if (event.target === projectModal) {
@@ -250,7 +265,7 @@
             }
         });
 
-        // Initial check for debugging purposes
+        // Initial check for debugging purposes once the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM Content Loaded. Script is running.');
             if (projectCards.length === 0) {
