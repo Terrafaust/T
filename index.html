@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Portail GitHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for body and typography */
+        /* Custom CSS pour le corps et la typographie */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
+            background-color: #f0f4f8; /* Arrière-plan bleu-gris clair */
             color: #333;
             line-height: 1.6;
         }
-        /* Styling for category titles with an underline effect */
+
+        /* Style pour les titres de catégorie avec un effet de soulignement */
         .category-title {
             font-size: 2.25rem; /* text-4xl */
             font-weight: 700; /* font-bold */
-            color: #2c3e50; /* Dark blue-gray */
+            color: #2c3e50; /* Bleu-gris foncé */
             margin-bottom: 1.5rem; /* mb-6 */
             text-align: center;
             position: relative;
             padding-bottom: 0.5rem;
         }
+
         .category-title::after {
             content: '';
             position: absolute;
@@ -31,48 +34,58 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background-color: #3498db; /* Blue accent */
+            background-color: #3498db; /* Accent bleu */
             border-radius: 2px;
         }
-        /* Project card hover effects */
+
+        /* Effets de survol des cartes de projet */
         .project-card {
             transition: all 0.3s ease-in-out;
             cursor: pointer;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
             border-radius: 0.75rem; /* rounded-xl */
-            /* Added basic background colors to mimic Tailwind gradients for functionality */
-            background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899); /* Default for game1 */
+            /* Couleurs de fond de base pour imiter les dégradés Tailwind */
+            background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899); /* Par défaut pour game1 */
         }
-        .project-card[data-project="game2"] {
-            background-image: linear-gradient(to bottom right, #22c55e, #3b82f6); /* For game2 */
+
+        .project-card[data-project="comp"] {
+            background-image: linear-gradient(to bottom right, #6366f1, #d946ef); /* Pour comp (indigo-fuchsia) */
         }
+
         .project-card[data-project="learnruss"] {
-            background-image: linear-gradient(to bottom right, #f59e0b, #ea580c); /* For learnruss */
+            background-image: linear-gradient(to bottom right, #f59e0b, #ea580c); /* Pour learnruss (jaune-orange) */
+        }
+
+        .project-card[data-project="devresources"] {
+            background-image: linear-gradient(to bottom right, #10b981, #06b6d4); /* Pour devresources (émeraude-cyan) */
         }
 
         .project-card:hover {
-            transform: translateY(-5px) scale(1.02); /* Slight lift and scale */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* stronger shadow */
+            transform: translateY(-5px) scale(1.02); /* Léger soulèvement et agrandissement */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Ombre plus forte */
         }
-        /* Custom modal styles for smooth transitions */
+
+        /* Styles de modal personnalisés pour des transitions fluides */
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            visibility: hidden; /* Hidden by default */
+            visibility: hidden; /* Caché par défaut */
             opacity: 0;
         }
+
         .modal-overlay.is-visible {
             visibility: visible;
             opacity: 1;
         }
+
         .modal-content {
             transform: translateY(20px);
             opacity: 0;
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 80vh; /* Limit height for scrollability */
-            overflow-y: auto; /* Enable vertical scrolling */
-            /* Basic styling for modal content */
+            max-height: 80vh; /* Limite la hauteur pour le défilement */
+            overflow-y: auto; /* Active le défilement vertical */
+            /* Style de base pour le contenu de la modal */
             background-color: white;
             padding: 2rem;
             border-radius: 0.75rem;
@@ -83,13 +96,15 @@
             margin-left: auto;
             margin-right: auto;
         }
+
         .modal-overlay.is-visible .modal-content {
             transform: translateY(0);
             opacity: 1;
         }
-        /* Custom button gradient for modal link */
+
+        /* Bouton de lien de modal personnalisé */
         .modal-link-button {
-            /* Default gradient, will be overridden by JS */
+            /* Dégradé par défaut, sera remplacé par JS */
             background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899);
             transition: all 0.3s ease-in-out;
             display: block;
@@ -100,12 +115,13 @@
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
         }
+
         .modal-link-button:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* Basic mimicked Tailwind classes for core layout and typography */
+        /* Classes Tailwind mimées pour la mise en page et la typographie */
         .container {
             width: 100%;
             margin-left: auto;
@@ -113,87 +129,275 @@
             padding-left: 1rem;
             padding-right: 1rem;
         }
-        @media (min-width: 640px) { /* sm breakpoint */
+
+        @media (min-width: 640px) {
+            /* point d'arrêt sm */
             .container {
                 max-width: 640px;
             }
         }
-        @media (min-width: 768px) { /* md breakpoint */
+
+        @media (min-width: 768px) {
+            /* point d'arrêt md */
             .container {
                 max-width: 768px;
             }
+
             .md\:grid-cols-2 {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
             .md\:p-8 {
                 padding: 2rem;
             }
         }
-        @media (min-width: 1024px) { /* lg breakpoint */
+
+        @media (min-width: 1024px) {
+            /* point d'arrêt lg */
             .container {
                 max-width: 1024px;
             }
+
             .lg\:p-10 {
                 padding: 2.5rem;
             }
         }
 
-        .flex { display: flex; }
-        .flex-col { flex-direction: column; }
-        .flex-grow { flex-grow: 1; }
-        .items-center { align-items: center; }
-        .justify-center { justify-content: center; }
-        .text-center { text-align: center; }
-        .text-right { text-align: right; }
-        .mb-3 { margin-bottom: 0.75rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .mb-12 { margin-bottom: 3rem; }
-        .mb-16 { margin-bottom: 4rem; }
-        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-        .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-        .px-4 { padding-left: 1rem; padding-right: 1rem; }
-        .p-6 { padding: 1.5rem; }
-        .gap-8 { gap: 2rem; }
-        .grid { display: grid; }
-        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-        .rounded-xl { border-radius: 0.75rem; }
-        .rounded-2xl { border-radius: 1rem; }
-        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-        .text-5xl { font-size: 3rem; line-height: 1; }
-        .font-extrabold { font-weight: 800; }
-        .text-gray-800 { color: #1f2937; }
-        .tracking-tight { letter-spacing: -0.025em; }
-        .text-white { color: #fff; }
-        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-        .opacity-90 { opacity: 0.9; }
-        .text-gray-600 { color: #4b5563; }
-        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-        .fixed { position: fixed; }
-        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-        .z-50 { z-index: 50; }
-        .pointer-events-none { pointer-events: none; }
-        .relative { position: relative; }
-        .absolute { position: absolute; }
-        .top-4 { top: 1rem; }
-        .right-4 { right: 1rem; }
-        .text-gray-500 { color: #6b7280; }
-        .hover\:text-gray-800:hover { color: #1f2937; }
-        .font-bold { font-weight: 700; }
-        .leading-relaxed { line-height: 1.625; }
-        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
-        .block { display: block; }
-        .list-disc { list-style-type: disc; }
-        .list-inside { list-style-position: inside; }
-        .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }
-        .text-blue-600 { color: #2563eb; }
-        .text-green-600 { color: #16a34a; }
-        .text-orange-600 { color: #f97316; }
-        .border-4 { border-width: 4px; }
-        .border-blue-400 { border-color: #60a5fa; }
-        .border-yellow-400 { border-color: #fbbf24; }
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .flex-grow {
+            flex-grow: 1;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-12 {
+            margin-bottom: 3rem;
+        }
+
+        .mb-16 {
+            margin-bottom: 4rem;
+        }
+
+        .py-12 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .py-6 {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .p-6 {
+            padding: 1.5rem;
+        }
+
+        .gap-8 {
+            gap: 2rem;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .rounded-xl {
+            border-radius: 0.75rem;
+        }
+
+        .rounded-2xl {
+            border-radius: 1rem;
+        }
+
+        .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .text-5xl {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .font-extrabold {
+            font-weight: 800;
+        }
+
+        .text-gray-800 {
+            color: #1f2937;
+        }
+
+        .tracking-tight {
+            letter-spacing: -0.025em;
+        }
+
+        .text-white {
+            color: #fff;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+        }
+
+        .opacity-90 {
+            opacity: 0.9;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+
+        .fixed {
+            position: fixed;
+        }
+
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .z-50 {
+            z-index: 50;
+        }
+
+        .pointer-events-none {
+            pointer-events: none;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .top-4 {
+            top: 1rem;
+        }
+
+        .right-4 {
+            right: 1rem;
+        }
+
+        .text-gray-500 {
+            color: #6b7280;
+        }
+
+        .hover\:text-gray-800:hover {
+            color: #1f2937;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .leading-relaxed {
+            line-height: 1.625;
+        }
+
+        .space-y-4>:not([hidden])~:not([hidden]) {
+            margin-top: 1rem;
+        }
+
+        .block {
+            display: block;
+        }
+
+        .list-disc {
+            list-style-type: disc;
+        }
+
+        .list-inside {
+            list-style-position: inside;
+        }
+
+        .space-y-2>:not([hidden])~:not([hidden]) {
+            margin-top: 0.5rem;
+        }
+
+        .text-blue-600 {
+            color: #2563eb;
+        }
+
+        .text-green-600 {
+            color: #16a34a;
+        }
+
+        .text-orange-600 {
+            color: #f97316;
+        }
+
+        .border-4 {
+            border-width: 4px;
+        }
+
+        .border-blue-400 {
+            border-color: #60a5fa;
+        }
+
+        .border-yellow-400 {
+            border-color: #fbbf24;
+        }
+
+        .border-purple-400 {
+            border-color: #ab68ff; /* Nouvelle couleur pour Outils devs */
+        }
+
+        .border-teal-400 {
+            border-color: #2dd4bf; /* Nouvelle couleur pour Ressources dev */
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col">
 
     <main class="flex-grow container mx-auto px-4 py-12">
@@ -203,13 +407,10 @@
             <h2 class="category-title">Jeu</h2>
             <div class="border-4 border-blue-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game1">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                        data-project="game1">
                         <h3 class="text-3xl font-bold mb-3">Game</h3>
                         <p class="text-lg opacity-90">Un jeu incrémental passionnant</p>
-                    </div>
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="game2">
-                        <h3 class="text-3xl font-bold mb-3">Game 2</h3>
-                        <p class="text-lg opacity-90">La suite de l'aventure incrémentale</p>
                     </div>
                 </div>
             </div>
@@ -219,9 +420,36 @@
             <h2 class="category-title">Apprentissage</h2>
             <div class="border-4 border-yellow-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center" data-project="learnruss">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                        data-project="learnruss">
                         <h3 class="text-3xl font-bold mb-3">LearnRussian</h3>
                         <p class="text-lg opacity-90">Apprenez le russe de manière interactive</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="category-title">Outils devs</h2>
+            <div class="border-4 border-purple-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                        data-project="comp">
+                        <h3 class="text-3xl font-bold mb-3">Comp</h3>
+                        <p class="text-lg opacity-90">Comparateur de codes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="category-title">Ressources dev</h2>
+            <div class="border-4 border-teal-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                        data-project="devresources">
+                        <h3 class="text-3xl font-bold mb-3">Ressources Dev</h3>
+                        <p class="text-lg opacity-90">Fiches mémo et outils pour développeurs</p>
                     </div>
                 </div>
             </div>
@@ -261,22 +489,6 @@
                     </ul>
                 `
             },
-            game2: {
-                title: "Game 2",
-                url: "https://terrafaust.github.io/Game2/Index.html",
-                description: `
-                    <p>Ce jeu est également un incrémental, reprenant et améliorant les concepts du premier, avec une production principalement passive de ressources sur le thème des études. Il inclut les fonctionnalités suivantes :</p>
-                    <ul class="list-disc list-inside mt-4 space-y-2">
-                        <li><strong class="text-green-600">Production de ressource améliorée</strong></li>
-                        <li>Constructions diverses et plus complexes</li>
-                        <li>Modèle de reset avec <strong class="text-green-600">Ascension / Prestige avancé</strong></li>
-                        <li>Arbre de compétence pour chaque grande étape du jeu</li>
-                        <li>Achievements/succès</li>
-                        <li>Quêtes</li>
-                        <li>Paramètres avec options utiles et ergonomiques</li>
-                    </ul>
-                `
-            },
             learnruss: {
                 title: "LearnRussian",
                 url: "https://terrafaust.github.io/LearnRuss/",
@@ -288,10 +500,34 @@
                         <li><strong class="text-orange-600">Partie Alphabet :</strong> Spécialisée dans l'apprentissage des lettres avec un alphabet visuel et pratique.</li>
                     </ul>
                 `
+            },
+            comp: {
+                title: "Comp",
+                url: "https://terrafaust.github.io/Comp/",
+                description: `
+                    <p>Comp est un comparateur de codes. Ses fonctionnalités principales sont :</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><strong class="text-purple-600">Mise en couleur du code</strong></li>
+                        <li>Importation de 2 fichiers pour les comparer l'un à côté de l'autre</li>
+                        <li>Fonctionnalité de <strong class="text-purple-600">défilement synchronisé</strong></li>
+                        <li>Recherche de ligne</li>
+                        <li>Comparaison des 2 documents</li>
+                    </ul>
+                `
+            },
+            devresources: {
+                title: "Ressources Dev",
+                description: `
+                    <p>Cette section contient des ressources utiles pour les développeurs, notamment une fiche mémo pour les roadmaps de développement.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                        <a href="https://github.com/TerraFaust/Comp/raw/main/Roadmap-fiche-m%C3%A9mo.docx" download class="modal-link-button" style="background-image: linear-gradient(to bottom right, #34d399, #059669);">Télécharger le document</a>
+                        <a href="https://docs.google.com/viewer?url=https://github.com/TerraFaust/Comp/raw/main/Roadmap-fiche-m%C3%A9mo.docx" target="_blank" rel="noopener noreferrer" class="modal-link-button" style="background-image: linear-gradient(to bottom right, #22d3ee, #0ea5e9);">Ouvrir dans le navigateur</a>
+                    </div>
+                `
             }
         };
 
-        // Get DOM elements for interaction
+        // Obtenir les éléments DOM pour l'interaction
         const projectCards = document.querySelectorAll('.project-card');
         const projectModal = document.getElementById('projectModal');
         const closeModalButton = document.getElementById('closeModal');
@@ -301,93 +537,105 @@
         const modalContent = projectModal.querySelector('.modal-content');
 
         /**
-         * Sets the gradient classes dynamically to the modal link button based on the project type.
-         * @param {string} projectId - The ID of the project ('game1', 'game2', 'learnruss').
+         * Définit dynamiquement les classes de dégradé pour le bouton de lien modal en fonction du type de projet.
+         * @param {string} projectId - L'ID du projet ('game1', 'comp', 'learnruss', 'devresources').
          */
         function setModalLinkGradient(projectId) {
             let fromColor, toColor;
             if (projectId === 'game1') {
                 fromColor = '#8b5cf6'; /* purple-500 */
                 toColor = '#ec4899'; /* pink-600 */
-            } else if (projectId === 'game2') {
-                fromColor = '#22c55e'; /* green-500 */
-                toColor = '#3b82f6'; /* blue-600 */
+            } else if (projectId === 'comp') {
+                fromColor = '#6366f1'; /* indigo-500 */
+                toColor = '#d946ef'; /* fuchsia-500 */
             } else if (projectId === 'learnruss') {
                 fromColor = '#f59e0b'; /* yellow-500 */
                 toColor = '#ea580c'; /* orange-600 */
+            } else if (projectId === 'devresources') {
+                fromColor = '#10b981'; /* emerald-500 */
+                toColor = '#06b6d4'; /* cyan-500 */
             }
-            // Apply gradient directly via style property
+            // Appliquer le dégradé directement via la propriété style
             modalLink.style.backgroundImage = `linear-gradient(to bottom right, ${fromColor}, ${toColor})`;
         }
 
         /**
-         * Displays the project modal with content specific to the given project ID.
-         * @param {string} projectId - The ID of the project to display.
+         * Affiche la modal de projet avec le contenu spécifique à l'ID de projet donné.
+         * @param {string} projectId - L'ID du projet à afficher.
          */
         function showModal(projectId) {
-            console.log(`Attempting to show modal for project: ${projectId}`); // Log for debugging
+            console.log(`Tentative d'affichage de la modal pour le projet : ${projectId}`);
             const project = projectDescriptions[projectId];
             if (project) {
                 modalTitle.textContent = project.title;
                 modalDescription.innerHTML = project.description;
-                modalLink.href = project.url;
-                setModalLinkGradient(projectId); // Set the gradient for the button
 
-                // Add 'is-visible' class to trigger CSS transitions for visibility and opacity
+                // Gérer le bouton de lien principal de la modal
+                if (projectId === 'devresources') {
+                    modalLink.style.display = 'none'; // Masquer le bouton par défaut pour les ressources dev
+                } else {
+                    modalLink.style.display = 'block'; // Afficher le bouton pour les autres projets
+                    modalLink.href = project.url;
+                    setModalLinkGradient(projectId); // Définir le dégradé pour le bouton
+                }
+
+                // Ajouter la classe 'is-visible' pour déclencher les transitions CSS
                 projectModal.classList.add('is-visible');
-                // Remove 'pointer-events-none' to allow interaction with the modal
+                // Supprimer 'pointer-events-none' pour permettre l'interaction avec la modal
                 projectModal.classList.remove('pointer-events-none');
-                console.log('Modal should now be visible.'); // Log for debugging
+                console.log('La modal devrait maintenant être visible.');
             } else {
-                console.error(`Project description not found for ID: ${projectId}`); // Error log if project ID is invalid
+                console.error(`Description de projet introuvable pour l'ID : ${projectId}`);
             }
         }
 
         /**
-         * Hides the project modal.
+         * Cache la modal de projet.
          */
         function hideModal() {
-            console.log('Attempting to hide modal.'); // Log for debugging
-            // Remove 'is-visible' class to trigger CSS transitions for hiding
+            console.log('Tentative de masquage de la modal.');
+            // Supprimer la classe 'is-visible' pour déclencher les transitions CSS pour le masquage
             projectModal.classList.remove('is-visible');
-            // Add 'pointer-events-none' to prevent interaction with the hidden modal
+            // Ajouter 'pointer-events-none' pour empêcher l'interaction avec la modal cachée
             projectModal.classList.add('pointer-events-none');
-            console.log('Modal should now be hidden.'); // Log for debugging
+            // Laisser le style.display du modalLink tel quel. Il sera géré par showModal lors de la prochaine ouverture.
+            console.log('La modal devrait maintenant être masquée.');
         }
 
-        // Add event listeners to each project card to show the modal on click
+        // Ajouter des écouteurs d'événements à chaque carte de projet pour afficher la modal au clic
         projectCards.forEach(card => {
             card.addEventListener('click', () => {
-                console.log('Project card clicked!'); // Log for debugging
+                console.log('Carte de projet cliquée !');
                 const projectId = card.getAttribute('data-project');
                 showModal(projectId);
             });
         });
 
-        // Add event listener to the close button inside the modal
+        // Ajouter un écouteur d'événements au bouton de fermeture à l'intérieur de la modal
         closeModalButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent click from bubbling up to the modal overlay
+            event.stopPropagation(); // Empêcher le clic de remonter à la superposition de la modal
             hideModal();
         });
 
-        // Add event listener to hide the modal when clicking outside the modal content (on the overlay)
+        // Ajouter un écouteur d'événements pour masquer la modal en cliquant en dehors du contenu de la modal (sur la superposition)
         projectModal.addEventListener('click', (event) => {
-            // Check if the click occurred directly on the modal overlay, not its content
+            // Vérifier si le clic s'est produit directement sur la superposition de la modal, pas son contenu
             if (event.target === projectModal) {
                 hideModal();
             }
         });
 
-        // Initial check for debugging purposes once the DOM is fully loaded
+        // Vérification initiale à des fins de débogage une fois le DOM entièrement chargé
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM Content Loaded. Script is running.');
+            console.log('Contenu DOM chargé. Le script est en cours d\'exécution.');
             if (projectCards.length === 0) {
-                console.warn('No project cards found. Check .project-card class in HTML.');
+                console.warn('Aucune carte de projet trouvée. Vérifiez la classe .project-card dans le HTML.');
             }
             if (!projectModal) {
-                console.error('projectModal element not found. Check #projectModal ID in HTML.');
+                console.error('L\'élément projectModal est introuvable. Vérifiez l\'ID #projectModal dans le HTML.');
             }
         });
     </script>
 </body>
+
 </html>
