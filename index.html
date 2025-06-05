@@ -10,17 +10,22 @@
         /* Custom CSS pour le corps et la typographie */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Arrière-plan bleu-gris clair */
+            background-color: #f0f4f8;
+            /* Arrière-plan bleu-gris clair */
             color: #333;
             line-height: 1.6;
         }
 
         /* Style pour les titres de catégorie avec un effet de soulignement */
         .category-title {
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: 700; /* font-bold */
-            color: #2c3e50; /* Bleu-gris foncé */
-            margin-bottom: 1.5rem; /* mb-6 */
+            font-size: 2.25rem;
+            /* text-4xl */
+            font-weight: 700;
+            /* font-bold */
+            color: #2c3e50;
+            /* Bleu-gris foncé */
+            margin-bottom: 1.5rem;
+            /* mb-6 */
             text-align: center;
             position: relative;
             padding-bottom: 0.5rem;
@@ -34,7 +39,8 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background-color: #3498db; /* Accent bleu */
+            background-color: #3498db;
+            /* Accent bleu */
             border-radius: 2px;
         }
 
@@ -42,27 +48,36 @@
         .project-card {
             transition: all 0.3s ease-in-out;
             cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            /* shadow-lg */
+            border-radius: 0.75rem;
+            /* rounded-xl */
             /* Couleurs de fond de base pour imiter les dégradés Tailwind */
-            background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899); /* Par défaut pour game1 */
+            background-image: linear-gradient(to bottom right, #8b5cf6, #ec4899);
+            /* Par défaut pour game1 */
         }
 
-        .project-card[data-project="comp"] {
-            background-image: linear-gradient(to bottom right, #6366f1, #d946ef); /* Pour comp (indigo-fuchsia) */
+        .project-card[data-project="comp"],
+        .project-card[data-project="arch"] {
+            background-image: linear-gradient(to bottom right, #6366f1, #d946ef);
+            /* Pour comp et arch (indigo-fuchsia) */
         }
 
         .project-card[data-project="learnruss"] {
-            background-image: linear-gradient(to bottom right, #f59e0b, #ea580c); /* Pour learnruss (jaune-orange) */
+            background-image: linear-gradient(to bottom right, #f59e0b, #ea580c);
+            /* Pour learnruss (jaune-orange) */
         }
 
         .project-card[data-project="devresources"] {
-            background-image: linear-gradient(to bottom right, #10b981, #06b6d4); /* Pour devresources (émeraude-cyan) */
+            background-image: linear-gradient(to bottom right, #10b981, #06b6d4);
+            /* Pour devresources (émeraude-cyan) */
         }
 
         .project-card:hover {
-            transform: translateY(-5px) scale(1.02); /* Léger soulèvement et agrandissement */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Ombre plus forte */
+            transform: translateY(-5px) scale(1.02);
+            /* Léger soulèvement et agrandissement */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            /* Ombre plus forte */
         }
 
         /* Styles de modal personnalisés pour des transitions fluides */
@@ -70,7 +85,8 @@
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            visibility: hidden; /* Caché par défaut */
+            visibility: hidden;
+            /* Caché par défaut */
             opacity: 0;
         }
 
@@ -83,16 +99,20 @@
             transform: translateY(20px);
             opacity: 0;
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 80vh; /* Limite la hauteur pour le défilement */
-            overflow-y: auto; /* Active le défilement vertical */
+            max-height: 80vh;
+            /* Limite la hauteur pour le défilement */
+            overflow-y: auto;
+            /* Active le défilement vertical */
             /* Style de base pour le contenu de la modal */
             background-color: white;
             padding: 2rem;
             border-radius: 0.75rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             position: relative;
-            max-width: 32rem; /* max-w-lg */
-            width: 91.666667%; /* w-11/12 */
+            max-width: 32rem;
+            /* max-w-lg */
+            width: 91.666667%;
+            /* w-11/12 */
             margin-left: auto;
             margin-right: auto;
         }
@@ -389,11 +409,13 @@
         }
 
         .border-purple-400 {
-            border-color: #ab68ff; /* Nouvelle couleur pour Outils devs */
+            border-color: #ab68ff;
+            /* Nouvelle couleur pour Outils devs */
         }
 
         .border-teal-400 {
-            border-color: #2dd4bf; /* Nouvelle couleur pour Ressources dev */
+            border-color: #2dd4bf;
+            /* Nouvelle couleur pour Ressources dev */
         }
     </style>
 </head>
@@ -403,70 +425,85 @@
     <main class="flex-grow container mx-auto px-4 py-12">
         <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12 tracking-tight">Projets Actuels</h1>
 
-        <section class="mb-16">
-            <h2 class="category-title">Jeu</h2>
-            <div class="border-4 border-blue-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
-                        data-project="game1">
-                        <h3 class="text-3xl font-bold mb-3">Game</h3>
-                        <p class="text-lg opacity-90">Un jeu incrémental passionnant</p>
+        <!-- First row of sections: Jeu & Apprentissage -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <section>
+                <h2 class="category-title">Jeu</h2>
+                <div class="border-4 border-blue-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="game1">
+                            <h3 class="text-3xl font-bold mb-3">Game</h3>
+                            <p class="text-lg opacity-90">Un jeu incrémental passionnant</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="mb-16">
-            <h2 class="category-title">Apprentissage</h2>
-            <div class="border-4 border-yellow-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
-                        data-project="learnruss">
-                        <h3 class="text-3xl font-bold mb-3">LearnRussian</h3>
-                        <p class="text-lg opacity-90">Apprenez le russe de manière interactive</p>
+            <section>
+                <h2 class="category-title">Apprentissage</h2>
+                <div class="border-4 border-yellow-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="learnruss">
+                            <h3 class="text-3xl font-bold mb-3">LearnRussian</h3>
+                            <p class="text-lg opacity-90">Apprenez le russe de manière interactive</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <section class="mb-16">
-            <h2 class="category-title">Outils devs</h2>
-            <div class="border-4 border-purple-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
-                        data-project="comp">
-                        <h3 class="text-3xl font-bold mb-3">Comp</h3>
-                        <p class="text-lg opacity-90">Comparateur de codes</p>
+        <!-- Second row of sections: Outils devs & Ressources dev -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <section>
+                <h2 class="category-title">Outils devs</h2>
+                <div class="border-4 border-purple-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="comp">
+                            <h3 class="text-3xl font-bold mb-3">Comp</h3>
+                            <p class="text-lg opacity-90">Comparateur de codes</p>
+                        </div>
+                        <!-- New Arch button -->
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="arch">
+                            <h3 class="text-3xl font-bold mb-3">Arch</h3>
+                            <p class="text-lg opacity-90">Arch est un site pour voir l'architecture de votre github</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="mb-16">
-            <h2 class="category-title">Ressources dev</h2>
-            <div class="border-4 border-teal-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-                    <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
-                        data-project="devresources">
-                        <h3 class="text-3xl font-bold mb-3">Ressources Dev</h3>
-                        <p class="text-lg opacity-90">Fiches mémo et outils pour développeurs</p>
+            <section>
+                <h2 class="category-title">Ressources dev</h2>
+                <div class="border-4 border-teal-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="devresources">
+                            <h3 class="text-3xl font-bold mb-3">Ressources Dev</h3>
+                            <p class="text-lg opacity-90">Fiches mémo et outils pour développeurs</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
     <footer class="py-6 px-4 text-right text-gray-600 text-sm">
         <p>Fait par Terra&IA</p>
     </footer>
 
-    <div id="projectModal" class="modal-overlay fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+    <div id="projectModal"
+        class="modal-overlay fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
         <div class="modal-content">
-            <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            <button id="closeModal"
+                class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
             <h3 id="modalTitle" class="text-4xl font-extrabold text-gray-800 mb-6 text-center"></h3>
             <div id="modalDescription" class="text-gray-700 text-lg leading-relaxed space-y-4">
             </div>
-            <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="modal-link-button">Visiter le site</a>
+            <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="modal-link-button">Visiter le
+                site</a>
         </div>
     </div>
 
@@ -515,6 +552,17 @@
                     </ul>
                 `
             },
+            arch: { // New project description for Arch
+                title: "Arch",
+                url: "https://terrafaust.github.io/Arch/",
+                description: `
+                    <p>Arch est un site pour voir l'architecture de votre github :</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li>Copier coller facilement votre architecture</li>
+                        <li>Télécharger votre projet en remplaçant les .js par des .js.txt</li>
+                    </ul>
+                `
+            },
             devresources: {
                 title: "Ressources Dev",
                 description: `
@@ -538,22 +586,30 @@
 
         /**
          * Définit dynamiquement les classes de dégradé pour le bouton de lien modal en fonction du type de projet.
-         * @param {string} projectId - L'ID du projet ('game1', 'comp', 'learnruss', 'devresources').
+         * @param {string} projectId - L'ID du projet ('game1', 'comp', 'learnruss', 'devresources', 'arch').
          */
         function setModalLinkGradient(projectId) {
             let fromColor, toColor;
             if (projectId === 'game1') {
-                fromColor = '#8b5cf6'; /* purple-500 */
-                toColor = '#ec4899'; /* pink-600 */
-            } else if (projectId === 'comp') {
-                fromColor = '#6366f1'; /* indigo-500 */
-                toColor = '#d946ef'; /* fuchsia-500 */
+                fromColor = '#8b5cf6';
+                /* purple-500 */
+                toColor = '#ec4899';
+                /* pink-600 */
+            } else if (projectId === 'comp' || projectId === 'arch') { // Apply same gradient for 'arch'
+                fromColor = '#6366f1';
+                /* indigo-500 */
+                toColor = '#d946ef';
+                /* fuchsia-500 */
             } else if (projectId === 'learnruss') {
-                fromColor = '#f59e0b'; /* yellow-500 */
-                toColor = '#ea580c'; /* orange-600 */
+                fromColor = '#f59e0b';
+                /* yellow-500 */
+                toColor = '#ea580c';
+                /* orange-600 */
             } else if (projectId === 'devresources') {
-                fromColor = '#10b981'; /* emerald-500 */
-                toColor = '#06b6d4'; /* cyan-500 */
+                fromColor = '#10b981';
+                /* emerald-500 */
+                toColor = '#06b6d4';
+                /* cyan-500 */
             }
             // Appliquer le dégradé directement via la propriété style
             modalLink.style.backgroundImage = `linear-gradient(to bottom right, ${fromColor}, ${toColor})`;
