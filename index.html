@@ -155,6 +155,10 @@
             .container {
                 max-width: 640px;
             }
+            /* Apply 2 columns at sm breakpoint */
+            .sm\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
         }
 
         @media (min-width: 768px) {
@@ -425,8 +429,10 @@
     <main class="flex-grow container mx-auto px-4 py-12">
         <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12 tracking-tight">Projets Actuels</h1>
 
-        <!-- Main grid container for all sections -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <!-- Main grid container for all sections.
+             Changed from md:grid-cols-2 to sm:grid-cols-2 to apply 2 columns
+             at the smaller 'sm' breakpoint (640px) instead of 'md' (768px). -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
             <section>
                 <h2 class="category-title">Jeu</h2>
                 <div class="border-4 border-blue-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
