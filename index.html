@@ -425,7 +425,7 @@
     <main class="flex-grow container mx-auto px-4 py-12">
         <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12 tracking-tight">Projets Actuels</h1>
 
-        <!-- First row of sections: Jeu & Apprentissage -->
+        <!-- Main grid container for all sections -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <section>
                 <h2 class="category-title">Jeu</h2>
@@ -452,20 +452,16 @@
                     </div>
                 </div>
             </section>
-        </div>
 
-        <!-- Second row of sections: Outils devs & Ressources dev -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <section>
                 <h2 class="category-title">Outils devs</h2>
                 <div class="border-4 border-purple-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
-                    <div class="grid grid-cols-1 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
                             data-project="comp">
                             <h3 class="text-3xl font-bold mb-3">Comp</h3>
                             <p class="text-lg opacity-90">Comparateur de codes</p>
                         </div>
-                        <!-- New Arch button -->
                         <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
                             data-project="arch">
                             <h3 class="text-3xl font-bold mb-3">Arch</h3>
@@ -628,7 +624,7 @@
 
                 // Gérer le bouton de lien principal de la modal
                 if (projectId === 'devresources') {
-                    modalLink.style.display = 'none'; // Masquer le bouton par défaut pour les ressources dev
+                    modalLink.style.display = 'none'; // Masquer le bouton par default pour les ressources dev
                 } else {
                     modalLink.style.display = 'block'; // Afficher le bouton pour les autres projets
                     modalLink.href = project.url;
