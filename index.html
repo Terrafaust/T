@@ -68,6 +68,17 @@
             /* Pour learnruss (jaune-orange) */
         }
 
+        /* NOUVEAU: Style pour LearnItal */
+        .project-card[data-project="learnital"] {
+            background-image: linear-gradient(to bottom right, #16a34a, #f97316);
+            /* vert-orange */
+        }
+        
+        /* NOUVEAU: Style pour Combinator */
+        .project-card[data-project="combinator"] {
+             background-image: linear-gradient(to bottom right, #3b82f6, #22d3ee); /* blue-cyan */
+        }
+
         .project-card[data-project="devresources"] {
             background-image: linear-gradient(to bottom right, #10b981, #06b6d4);
             /* Pour devresources (émeraude-cyan) */
@@ -421,6 +432,11 @@
             border-color: #2dd4bf;
             /* Nouvelle couleur pour Ressources dev */
         }
+        
+        /* NOUVEAU: Couleur de bordure pour la section Fun */
+        .border-green-400 {
+            border-color: #4ade80;
+        }
     </style>
 </head>
 
@@ -449,11 +465,18 @@
             <section>
                 <h2 class="category-title">Apprentissage</h2>
                 <div class="border-4 border-yellow-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
-                    <div class="grid grid-cols-1 gap-8">
+                    <!-- MODIFIÉ: La grille interne passe à 2 colonnes sur les écrans moyens -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
                             data-project="learnruss">
                             <h3 class="text-3xl font-bold mb-3">LearnRussian</h3>
                             <p class="text-lg opacity-90">Apprenez le russe de manière interactive</p>
+                        </div>
+                        <!-- NOUVEAU: Carte pour LearnItalian -->
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="learnital">
+                            <h3 class="text-3xl font-bold mb-3">LearnItalian</h3>
+                            <p class="text-lg opacity-90">Apprenez l'italien de manière interactive</p>
                         </div>
                     </div>
                 </div>
@@ -485,6 +508,20 @@
                             data-project="devresources">
                             <h3 class="text-3xl font-bold mb-3">Ressources Dev</h3>
                             <p class="text-lg opacity-90">Fiches mémo et outils pour développeurs</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- NOUVEAU: Section Fun -->
+            <section>
+                <h2 class="category-title">Fun</h2>
+                <div class="border-4 border-green-400 rounded-2xl p-6 md:p-8 lg:p-10 bg-white shadow-xl">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="project-card text-white rounded-xl p-6 flex flex-col items-center justify-center text-center"
+                            data-project="combinator">
+                            <h3 class="text-3xl font-bold mb-3">Combinator</h3>
+                            <p class="text-lg opacity-90">Combinaisons de champions LoL</p>
                         </div>
                     </div>
                 </div>
@@ -540,6 +577,18 @@
                     </ul>
                 `
             },
+            // NOUVEAU: Description pour LearnItalian
+            learnital: {
+                title: "LearnItalian",
+                url: "https://terrafaust.github.io/LearnItal/",
+                description: `
+                    <p>Ce site est composé de plusieurs parties pour apprendre l'italien :</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><strong class="text-green-600">Partie Vocabulaire :</strong> Avec des fonctionnalités pour enlever les traductions, mettre des mots en favoris, catégoriser le vocabulaire en différents thèmes.</li>
+                        <li><strong class="text-green-600">Partie Cours en 21 jours :</strong> Permet d'apprendre les bases de l'italien en 21 Jours. Cette partie comprend des focus sur l'histoire, la culture, la phonétique, l’étymologie et d'autres apports culturels. Jour après jour, le visiteur peut apprendre du vocabulaire, la conjugaison, les bases pour les discussions du quotidien à travers des exercices.</li>
+                    </ul>
+                `
+            },
             comp: {
                 title: "Comp",
                 url: "https://terrafaust.github.io/Comp/",
@@ -563,6 +612,14 @@
                         <li>Copier coller facilement votre architecture</li>
                         <li>Télécharger votre projet en remplaçant les .js par des .js.txt</li>
                     </ul>
+                `
+            },
+            // NOUVEAU: Description pour Combinator
+            combinator: {
+                title: "Combinator",
+                url: "https://terrafaust.github.io/Combinator/",
+                description: `
+                    <p>Un site simple pour savoir si vos personnages de League of Legends se combinent bien.</p>
                 `
             },
             devresources: {
@@ -593,28 +650,28 @@
         function setModalLinkGradient(projectId) {
             let fromColor, toColor;
             if (projectId === 'game1') {
-                fromColor = '#8b5cf6';
-                /* purple-500 */
-                toColor = '#ec4899';
-                /* pink-600 */
+                fromColor = '#8b5cf6'; /* purple-500 */
+                toColor = '#ec4899'; /* pink-600 */
             } else if (projectId === 'comp' || projectId === 'arch') { // Apply same gradient for 'arch'
-                fromColor = '#6366f1';
-                /* indigo-500 */
-                toColor = '#d946ef';
-                /* fuchsia-500 */
+                fromColor = '#6366f1'; /* indigo-500 */
+                toColor = '#d946ef'; /* fuchsia-500 */
             } else if (projectId === 'learnruss') {
-                fromColor = '#f59e0b';
-                /* yellow-500 */
-                toColor = '#ea580c';
-                /* orange-600 */
+                fromColor = '#f59e0b'; /* yellow-500 */
+                toColor = '#ea580c'; /* orange-600 */
+            } else if (projectId === 'learnital') { // NOUVEAU: Dégradé pour LearnItal
+                fromColor = '#16a34a'; /* green-600 */
+                toColor = '#f97316'; /* orange-600 */
+            } else if (projectId === 'combinator') { // NOUVEAU: Dégradé pour Combinator
+                fromColor = '#3b82f6'; /* blue-500 */
+                toColor = '#22d3ee'; /* cyan-400 */
             } else if (projectId === 'devresources') {
-                fromColor = '#10b981';
-                /* emerald-500 */
-                toColor = '#06b6d4';
-                /* cyan-500 */
+                fromColor = '#10b981'; /* emerald-500 */
+                toColor = '#06b6d4'; /* cyan-500 */
             }
             // Appliquer le dégradé directement via la propriété style
-            modalLink.style.backgroundImage = `linear-gradient(to bottom right, ${fromColor}, ${toColor})`;
+            if(fromColor && toColor) {
+                modalLink.style.backgroundImage = `linear-gradient(to bottom right, ${fromColor}, ${toColor})`;
+            }
         }
 
         /**
